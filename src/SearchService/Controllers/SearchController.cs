@@ -3,14 +3,14 @@ using MongoDB.Entities;
 using SearchService.Models;
 using SearchService.RequestHelpers;
 
-namespace SearchService.Controllers;
+namespace SearchService;
 
 [ApiController]
 [Route("api/search")]
 public class SearchController : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<Item>>> SearchItems([FromQuery]SearchParams searchParams)
+    public async Task<ActionResult<List<Item>>> SearchItems([FromQuery] SearchParams searchParams)
     {
         var query = DB.PagedSearch<Item, Item>();
 
@@ -50,7 +50,8 @@ public class SearchController : ControllerBase
 
         var result = await query.ExecuteAsync();
 
-        return Ok(new{
+        return Ok(new
+        {
             results = result.Results,
             pageCount = result.PageCount,
             totalCount = result.TotalCount
